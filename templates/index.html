@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../assets/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>go-rest-api-gin</title>
+</head>
+<body>
+  <div class="widget-wrap">
+    <h1>API - Gin e Golang</h1>
+    <div class="widget-wrap">
+      
+      <table>
+        <th>id</th>
+        <th>Nome</th>
+        <th>RG</th>
+        <th>CPF</th>
+        <tbody>
+        {{ range .alunos}}
+            <tr>
+              <td>{{.ID}}</td>
+              <td>{{.Nome}}</td>
+              <td>{{.RG}}</td>
+              <td>{{.Cpf}}</td>
+            </tr>
+            {{end}}
+          </tbody>
+      </table>
+    </div>
+</body>
+</html>
