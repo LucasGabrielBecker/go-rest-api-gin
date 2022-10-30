@@ -22,13 +22,16 @@ func Saudacao(c *gin.Context) {
 }
 
 func CriaNovoAluno(c *gin.Context) {
-	var input models.CriarAlunoInput
-	if err := c.ShouldBindJSON(&input); err != nil {
+	var aluno models.Aluno
+	if err := c.ShouldBindJSON(&aluno); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
 		return
 	}
 
-	aluno := models.Aluno{Nome: input.Nome, Cpf: input.Cpf, RG: input.RG}
+	if err := models.ValidaDadosDeAluno(&aluno); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
+		return
+	}
 
 	database.DB.Create(&aluno)
 	c.JSON(http.StatusCreated, &aluno)
@@ -75,6 +78,11 @@ func EditaAluno(c *gin.Context) {
 			"error": err.Error(),
 		})
 
+		return
+	}
+
+	if err := models.ValidaDadosDeAluno(&aluno); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
 		return
 	}
 
